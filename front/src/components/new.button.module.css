@@ -1,0 +1,48 @@
+.new{
+	display:flex;
+	gap:6px;
+
+	place-items:flex-end;
+	place-content:flex-end;
+}
+
+
+.new input{
+	display:flex;
+	border:none;
+	border-bottom:2px solid var(--primary);
+	width:0;
+
+	outline:none;
+	padding:3px 0px;
+}
+
+.new input:not(:focus){
+	animation:hide-input .9s both;
+}
+.new input:focus{
+	animation:show-input .9s both;
+}
+
+.button__new > svg{
+	width:25px;
+	height:25px;
+	stroke:black;
+}
+
+@keyframes show-input{
+	0%{
+		width:0;
+	}
+	100%{
+		width:100%;
+	}
+}
+@keyframes hide-input{
+	0%{
+		width:100%;
+	}
+	100%{
+		width:0;
+	}
+}

@@ -1,0 +1,11 @@
+.folders{
+	display:flex;
+	flex-direction:row;
+	gap:12px;
+}
+
+.folders svg{
+	width:25px;
+	height:25px;
+	stroke:black;
+}

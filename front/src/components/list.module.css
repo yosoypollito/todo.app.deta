@@ -1,0 +1,64 @@
+.list{
+	display:grid;
+	grid-template-rows:min-content 1fr min-content;
+
+	background:white;
+
+	width:100%;
+	min-height:150px;
+	height:fit-content;
+
+	box-shadow: 0 10px 20px rgb(64 64 64 / 15%);
+
+	gap:6px;
+
+	border-radius:12px;
+	overflow:hidden;
+}
+
+.information{
+	display:flex;
+	place-items:center;
+
+	border-bottom:1px solid #ddd;
+}
+
+.information input{
+	display:flex;
+	width:100%;
+	border:none;
+	outline:none;
+
+	height:100%;
+
+	padding:12px 6px 6px 12px;
+	font-size:14px;
+}
+
+.actions svg{
+	color:black;
+	stroke:black;
+
+	width:20px;
+	height:20px;
+}
+
+.actions{
+	display:flex;
+	width:100%;
+	place-content:flex-end;
+
+	border-top:1px solid #ddd;
+
+	gap:6px;
+}
+
+.content{
+	display:flex;
+	flex-direction:column;
+}
+
+.actions, .content{
+
+	padding:6px;
+}

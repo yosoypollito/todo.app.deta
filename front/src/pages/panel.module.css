@@ -1,0 +1,41 @@
+.container{
+	display:grid;
+	grid-template-rows:min-content 1fr;
+	grid-template-areas:
+	"actions"
+	"watcher";
+
+	width:90%;
+	height:90vh;
+
+
+	gap:12px;
+}
+
+.actions,.watcher{
+	padding:6px;
+	border-radius:6px;
+}
+
+.actions{
+	grid-area:actions;
+	background:white;
+	box-shadow: 0 10px 20px rgb(64 64 64 / 15%);
+
+	display:flex;
+	flex-direction:row;
+	width:100%;
+	place-content:space-between;
+
+}
+
+.watcher{
+	grid-area:watcher;
+
+	display:grid;
+	grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+	gap:12px;
+	padding:12px;
+
+	place-content:flex-start;
+}
