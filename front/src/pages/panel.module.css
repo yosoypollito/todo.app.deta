@@ -10,6 +10,7 @@
 
 
 	gap:12px;
+	overflow:hidden;
 }
 
 .actions,.watcher{
@@ -38,4 +39,5 @@
 	padding:12px;
 
 	place-content:flex-start;
+	position:relative;
 }

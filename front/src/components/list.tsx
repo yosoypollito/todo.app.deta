@@ -8,7 +8,7 @@ const DeleteButton = (props:React.HTMLAttributes<HTMLButtonElement>)=>{
   return (
     <button {...{
       ...props
-      }}>
+    }}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.25" fill="none">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
         <line x1="4" y1="7" x2="20" y2="7" />
@@ -34,22 +34,41 @@ const ArchiveHandler = ()=>(
 
 import { changeListPosition, removeList} from "@redux/features/lists.actions"
 
-import { useState } from "react"
+import { useRef, useState, useEffect } from "react";
 
 export default function List({ item:listItem}:ListProps){
 
   const { position, title }:ListItem = listItem;
 
-  const [dragging, setDragging] = useState(false);
+  const parent = useRef<HTMLDivElement>(null);
+
+  useEffect(()=>{
+    if(parent.current != null){
+      setBoundary(parent.current.getBoundingClientRect())
+    }
+  },[]);
+
+  const [boundary, setBoundary] = useState({
+    x:0,
+    y:0,
+    left:0,
+    top:0
+  });
 
   const onDragStart = (e:DragEvent<HTMLDivElement>)=>{
     e.dataTransfer.setData("position", String(position));
+    e.dataTransfer.setDragImage(new Image(),0,0);
   }
 
-  const onDragOver = (e:DragEvent<HTMLDivElement>)=>{
-    e.preventDefault();
-    console.log(e.target);
-    console.log(e.currentTarget);
+
+  const onDrag = (e:DragEvent<HTMLDivElement>)=>{
+    e.currentTarget.style.top = `${e.clientY - boundary.y}px`;
+    e.currentTarget.style.left = `${e.clientX - boundary.x}px`;
+  }
+
+  const onDragEnd = (e:DragEvent<HTMLDivElement>)=>{
+    e.currentTarget.style.top = `initial`;
+    e.currentTarget.style.left = `initial`;
   }
 
   const onDrop = (e:DragEvent<HTMLDivElement>, pos:number)=>{
@@ -63,7 +82,7 @@ export default function List({ item:listItem}:ListProps){
   }
 
   return(
-    <div draggable onDragStart={onDragStart} onDrop={(e)=>onDrop(e,position)} onDragOver={onDragOver} className={styles.list} key={title}>
+    <div draggable onDragStart={onDragStart} onDrop={(e)=>onDrop(e,position)}  onDragEnd={onDragEnd} onDragOver={(e)=>e.preventDefault()} onDrag={onDrag} className={styles.list} key={title} ref={parent}>
 
       <div className={styles.information}>
         <input defaultValue={title}/>
@@ -75,9 +94,7 @@ export default function List({ item:listItem}:ListProps){
       <div className={styles.actions}>
 
         <ArchiveHandler/>
-        <DeleteButton onClick={()=>removeList({
-          position
-        })}/>
+        <DeleteButton onClick={()=>removeList(listItem)}/>
 
       </div>
     </div>

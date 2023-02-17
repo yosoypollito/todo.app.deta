@@ -4,7 +4,6 @@
 
 	background:white;
 
-	width:100%;
 	min-height:150px;
 	height:fit-content;
 
@@ -12,8 +11,11 @@
 
 	gap:6px;
 
-	border-radius:12px;
 	overflow:hidden;
+	border-radius:12px;
+
+	position:relative;
+	z-index:2;
 }
 
 .information{
