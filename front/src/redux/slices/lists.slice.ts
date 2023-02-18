@@ -1,25 +1,21 @@
 import { RootState } from "@redux/store"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-import type { ListItem, ListsState, DraggingElement } from "src/types"
+import type { ListItem, ListsState } from "src/types"
 
 const initialState:ListsState = {
   lists:[
     {
       title:"1",
       position:0,
+      id:"0"
     },
     {
       title:"2",
       position:1,
+      id:"1"
     }
-  ],
-  dragging:{
-    position:{
-      x:0,
-      y:0
-    }
-  }
+  ]
 }
 
 const listsSlice = createSlice({
@@ -29,7 +25,8 @@ const listsSlice = createSlice({
     addList:(state, action: PayloadAction<string>) => {
       const newList = [...state.lists,{
         title:action.payload,
-        position:state.lists.length
+        position:state.lists.length,
+        id:state.lists.length.toString()
       }];
 
       state.lists = newList;
@@ -39,15 +36,12 @@ const listsSlice = createSlice({
     },
     delList:(state, action: PayloadAction<number>)=>{
       state.lists.splice(action.payload, 1);
-    },
-    updateDragging:(state, action: PayloadAction<DraggingElement>)=>{
-      state.dragging = action.payload;
     }
   }
 })
 
 export const selectLists = (state:RootState)=>state.lists.lists;
 
-export const { addList, sortLists, delList, updateDragging } = listsSlice.actions;
+export const { addList, sortLists, delList } = listsSlice.actions;
 
 export default listsSlice.reducer;

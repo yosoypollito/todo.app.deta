@@ -15,14 +15,12 @@
 	border-radius:12px;
 
 	position:relative;
-	z-index:2;
+	z-index:3;
 }
 
 .information{
 	display:flex;
 	place-items:center;
-
-	border-bottom:1px solid #ddd;
 }
 
 .information input{
@@ -50,8 +48,6 @@
 	width:100%;
 	place-content:flex-end;
 
-	border-top:1px solid #ddd;
-
 	gap:6px;
 }
 
@@ -63,4 +59,14 @@
 .actions, .content{
 
 	padding:6px;
+}
+
+.onDragging{
+	z-index:10;
+}
+
+.onOverDragging{
+	outline:3px solid var(--background);
+	opacity:0.75;
+	z-index:3;
 }

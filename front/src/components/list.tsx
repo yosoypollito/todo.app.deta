@@ -3,6 +3,8 @@ import styles from "@components/list.module.css"
 import type { ListProps, ListItem } from "src/types"
 import type { DragEvent } from "react"
 
+import cn from "classnames";
+
 
 const DeleteButton = (props:React.HTMLAttributes<HTMLButtonElement>)=>{
   return (
@@ -34,7 +36,7 @@ const ArchiveHandler = ()=>(
 
 import { changeListPosition, removeList} from "@redux/features/lists.actions"
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react"
 
 export default function List({ item:listItem}:ListProps){
 
@@ -60,10 +62,11 @@ export default function List({ item:listItem}:ListProps){
     e.dataTransfer.setDragImage(new Image(),0,0);
   }
 
-
   const onDrag = (e:DragEvent<HTMLDivElement>)=>{
     e.currentTarget.style.top = `${e.clientY - boundary.y}px`;
     e.currentTarget.style.left = `${e.clientX - boundary.x}px`;
+
+    e.currentTarget.classList.add(styles.onDragging);
   }
 
   const onDragEnd = (e:DragEvent<HTMLDivElement>)=>{
@@ -77,12 +80,28 @@ export default function List({ item:listItem}:ListProps){
     changeListPosition({
       prevPos:pos,
       newPos:Number(e.dataTransfer.getData("position"))
-    })
+    });
+  }
 
+  const onDragLeave = (e:DragEvent<HTMLDivElement>)=>{
+    e.currentTarget.classList.remove(styles.onOverDragging);
+  }
+
+  const onDragOver = (e:DragEvent<HTMLDivElement>)=>{
+    e.preventDefault();
+    if(e.currentTarget.classList.contains(styles.onDragging)) return;
+    e.currentTarget.classList.add(styles.onOverDragging);
   }
 
   return(
-    <div draggable onDragStart={onDragStart} onDrop={(e)=>onDrop(e,position)}  onDragEnd={onDragEnd} onDragOver={(e)=>e.preventDefault()} onDrag={onDrag} className={styles.list} key={title} ref={parent}>
+    <div draggable {...{
+      onDragStart,
+      onDrop:(e)=>onDrop(e,position),
+      onDragLeave,
+      onDragEnd,
+      onDragOver,
+      onDrag
+      }} className={cn(styles.list)} key={title} ref={parent}>
 
       <div className={styles.information}>
         <input defaultValue={title}/>
