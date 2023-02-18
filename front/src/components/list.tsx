@@ -72,6 +72,8 @@ export default function List({ item:listItem}:ListProps){
   const onDragEnd = (e:DragEvent<HTMLDivElement>)=>{
     e.currentTarget.style.top = `initial`;
     e.currentTarget.style.left = `initial`;
+    
+    e.currentTarget.classList.remove(styles.onDragging);
   }
 
   const onDrop = (e:DragEvent<HTMLDivElement>, pos:number)=>{
