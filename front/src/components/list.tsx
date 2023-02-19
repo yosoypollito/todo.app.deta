@@ -1,6 +1,6 @@
 import styles from "@components/list.module.css"
 
-import type { ListProps, ListItem } from "src/types"
+import type { FolderProps, ListItem } from "src/types"
 import type { DragEvent } from "react"
 
 import cn from "classnames";
@@ -34,11 +34,11 @@ const ArchiveHandler = ()=>(
   </button>
 )
 
-import { changeListPosition, removeList} from "@redux/features/lists.actions"
+import { changeListPosition, removeList} from "@redux/features/folder.actions"
 
 import { useRef, useState, useEffect } from "react"
 
-export default function List({ item:listItem}:ListProps){
+export default function List({ item:listItem}:FolderProps){
 
   const { position, title }:ListItem = listItem;
 

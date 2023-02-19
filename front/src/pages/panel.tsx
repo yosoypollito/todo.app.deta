@@ -8,7 +8,7 @@ import { useAppSelector } from "@redux/hooks"
 
 export default function Panel(){
 
-  const { lists } = useAppSelector(state=>state.lists);
+  const { folder } = useAppSelector(state=>state);
 
   return(
     <div className={panel.container}>
@@ -19,7 +19,7 @@ export default function Panel(){
       </div>
 
       <div className={panel.watcher}>
-        {lists.map((item,i)=><List {...{
+        {folder.childrens.map((item,i)=><List {...{
           item,
           key:i,
           position:i

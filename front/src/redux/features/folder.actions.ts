@@ -2,7 +2,7 @@ import store from "@redux/store"
 
 import type { ListItem, DragAndDropProps } from "src/types";
 
-import { addList, sortLists, delList } from "@redux/slices/lists.slice";
+import { addList, sortLists, delList } from "@redux/slices/folder.slice";
 
 export const createList = (value:string)=>store.dispatch((dispatch)=>{
   dispatch(addList(value))
@@ -10,8 +10,8 @@ export const createList = (value:string)=>store.dispatch((dispatch)=>{
 
 export const changeListPosition = ({ prevPos, newPos }:DragAndDropProps)=>store.dispatch((dispatch,getState)=>{
 
-  const state = getState().lists;
-  const newList = [...state.lists];
+  const state = getState().folder;
+  const newList = [...state.childrens];
 
   const getListAndChangePos = ({ prevPos, newPos }:DragAndDropProps)=>{
     const listItem:ListItem = newList[prevPos];
@@ -45,3 +45,4 @@ export const removeList = ({ position }:ListItem)=>store.dispatch((dispatch)=>{
 
   dispatch(delList(position))
 })
+

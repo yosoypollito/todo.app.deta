@@ -4,8 +4,8 @@ export interface ListItem {
   id:string;
 }
 
-export interface ListProps{
-  item:ListItem
+export interface FolderProps{
+  item:FolderItem
 }
 
 export interface DragAndDropProps{
@@ -13,6 +13,8 @@ export interface DragAndDropProps{
   newPos:number;
 }
 
-export interface ListsState {
-  lists:Array<ListItem>;
+export interface Folder{
+  title:string;
+  id:string;
+  childrens:Array<ListItem>
 }

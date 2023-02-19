@@ -2,7 +2,7 @@ import styles from "@components/new.button.module.css"
 
 import { useRef, useState } from "react";
 
-import { createList } from "@redux/features/lists.actions";
+import { createList } from "@redux/features/folder.actions";
 
 export default function New(){
 
