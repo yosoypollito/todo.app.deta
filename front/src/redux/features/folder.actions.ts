@@ -1,20 +1,20 @@
 import store from "@redux/store"
 
-import type { ListItem, DragAndDropProps } from "src/types";
+import type { List } from "src/types";
 
 import { addList, sortLists, delList } from "@redux/slices/folder.slice";
 
-export const createList = (value:string)=>store.dispatch((dispatch)=>{
+export const createList:List.Actions.Create = (value)=>store.dispatch((dispatch)=>{
   dispatch(addList(value))
 });
 
-export const changeListPosition = ({ prevPos, newPos }:DragAndDropProps)=>store.dispatch((dispatch,getState)=>{
+export const replacePositions:List.Actions.ReplacePositions = ({ prevPos, newPos })=>store.dispatch((dispatch,getState)=>{
 
   const state = getState().folder;
   const newList = [...state.childrens];
 
-  const getListAndChangePos = ({ prevPos, newPos }:DragAndDropProps)=>{
-    const listItem:ListItem = newList[prevPos];
+  const getListAndChangePos:List.Actions.GetListAndChangePosition = ({ prevPos, newPos })=>{
+    const listItem:List.Item = newList[prevPos];
     return {
       ...listItem,
       position:newPos
@@ -38,11 +38,14 @@ export const changeListPosition = ({ prevPos, newPos }:DragAndDropProps)=>store.
 })
 
 
-export const removeList = ({ position }:ListItem)=>store.dispatch((dispatch)=>{
+export const removeList:List.Actions.Remove = (list)=>store.dispatch((dispatch)=>{
 
   //Here goes all fetching data for delete in backend
-  console.log(position)
+  console.log(list.position)
 
-  dispatch(delList(position))
-})
+  dispatch(delList(list.position))
+});
 
+export const archiveList:List.Actions.Archive = (id)=>store.dispatch((dispatch,getState)=>{
+  //TODO send to archive folder and re-fetch current folder or del list item.
+});

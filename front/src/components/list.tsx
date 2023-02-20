@@ -1,10 +1,12 @@
-import styles from "@components/list.module.css"
-
-import type { FolderProps, ListItem } from "src/types"
+import type { Folder, List } from "src/types"
 import type { DragEvent } from "react"
 
-import cn from "classnames";
+import { useRef, useState, useEffect } from "react"
+import styles from "@components/list.module.css"
 
+import { replacePositions, removeList} from "@redux/features/folder.actions"
+
+import ArchiveHandler from "@components/archive.handler"
 
 const DeleteButton = (props:React.HTMLAttributes<HTMLButtonElement>)=>{
   return (
@@ -23,24 +25,9 @@ const DeleteButton = (props:React.HTMLAttributes<HTMLButtonElement>)=>{
   )
 }
 
-const ArchiveHandler = ()=>(
-  <button>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.25" fill="none">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <rect x="3" y="4" width="18" height="4" rx="2" />
-      <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-      <line x1="10" y1="12" x2="14" y2="12" />
-    </svg>
-  </button>
-)
+export default function List({ item:listItem}:Folder.Props){
 
-import { changeListPosition, removeList} from "@redux/features/folder.actions"
-
-import { useRef, useState, useEffect } from "react"
-
-export default function List({ item:listItem}:FolderProps){
-
-  const { position, title }:ListItem = listItem;
+  const { position, title }:List.Item = listItem;
 
   const parent = useRef<HTMLDivElement>(null);
 
@@ -63,6 +50,8 @@ export default function List({ item:listItem}:FolderProps){
   }
 
   const onDrag = (e:DragEvent<HTMLDivElement>)=>{
+
+    if(e.clientY == 0 || e.clientX == 0) return;
     e.currentTarget.style.top = `${e.clientY - boundary.y}px`;
     e.currentTarget.style.left = `${e.clientX - boundary.x}px`;
 
@@ -79,7 +68,7 @@ export default function List({ item:listItem}:FolderProps){
   const onDrop = (e:DragEvent<HTMLDivElement>, pos:number)=>{
     e.preventDefault();
 
-    changeListPosition({
+    replacePositions({
       prevPos:pos,
       newPos:Number(e.dataTransfer.getData("position"))
     });
@@ -103,7 +92,7 @@ export default function List({ item:listItem}:FolderProps){
       onDragEnd,
       onDragOver,
       onDrag
-      }} className={cn(styles.list)} key={title} ref={parent}>
+      }} className={styles.list} key={title} ref={parent}>
 
       <div className={styles.information}>
         <input defaultValue={title}/>
@@ -114,7 +103,9 @@ export default function List({ item:listItem}:FolderProps){
 
       <div className={styles.actions}>
 
-        <ArchiveHandler/>
+        <ArchiveHandler {...{
+          id:listItem.id
+        }}/>
         <DeleteButton onClick={()=>removeList(listItem)}/>
 
       </div>

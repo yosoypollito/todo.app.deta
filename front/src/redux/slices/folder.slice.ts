@@ -1,9 +1,9 @@
 import { RootState } from "@redux/store"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-import type { ListItem, Folder } from "src/types"
+import type { Folder, List } from "src/types"
 
-const initialState:Folder = {
+const initialState:Folder.Item = {
   title:"main",
   id:"main",
   childrens:[{
@@ -31,7 +31,7 @@ const folderSlice = createSlice({
 
       state.childrens = newList;
     },
-    sortLists:(state, action: PayloadAction<Array<ListItem>>)=>{
+    sortLists:(state, action: PayloadAction<Array<List.Item>>)=>{
       state.childrens = action.payload.sort((a,b)=>a.position - b.position);
     },
     delList:(state, action: PayloadAction<number>)=>{
