@@ -11,11 +11,8 @@
 
 	gap:6px;
 
-	overflow:hidden;
 	border-radius:12px;
-
 	position:relative;
-	z-index:3;
 }
 
 .information{
@@ -27,6 +24,7 @@
 	display:flex;
 	width:100%;
 	border:none;
+	border-radius:12px 12px 0 0;
 	outline:none;
 
 	height:100%;
@@ -41,6 +39,7 @@
 
 	width:20px;
 	height:20px;
+	z-index:10;
 }
 
 .actions{
@@ -49,6 +48,8 @@
 	place-content:flex-end;
 
 	gap:6px;
+	position:relative;
+	z-index:2;
 }
 
 .content{
@@ -57,12 +58,11 @@
 }
 
 .actions, .content{
-
 	padding:6px;
 }
 
 .onDragging{
-	z-index:10;
+	z-index:4;
 }
 
 .onOverDragging{
